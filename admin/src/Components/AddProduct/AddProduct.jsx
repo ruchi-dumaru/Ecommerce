@@ -165,7 +165,7 @@ const AddProduct = () => {
           />
         </div>
 
-        {/* Button */}
+       
         <button
           onClick={() => {
             AddProduct();
