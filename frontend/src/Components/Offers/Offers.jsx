@@ -5,7 +5,7 @@ const Offers = () => {
   return (
     <div className="flex m-20 items-center justify-between mt-20 px-16 h-[80vh] bg-gradient-to-r from-pink-200 via-white to-white rounded-2xl shadow-lg">
       
-      {/* Left side text */}
+      
       <div className="flex flex-col gap-6 max-w-lg">
         <h1 className="text-7xl font-extrabold text-gray-800 leading-tight">
           Exclusive
@@ -21,7 +21,7 @@ const Offers = () => {
         </button>
       </div>
 
-      {/* Right side image */}
+    
       <div className="flex-shrink-0 w-[40%]">
         <img
           src={exclusive}

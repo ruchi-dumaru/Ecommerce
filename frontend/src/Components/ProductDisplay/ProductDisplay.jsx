@@ -7,9 +7,9 @@ const ProductDisplay = (props) => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 px-4 sm:px-6 lg:px-10 py-6 lg:py-10">
-      {/* LEFT SIDE - Images */}
+  
       <div className="flex flex-col sm:flex-row  w-full lg:w-1/2">
-        {/* Thumbnail Images */}
+      
         <div className="flex flex-row sm:flex-col gap-1 sm:gap-2 w-full sm:w-24 lg:w-28 order-2 sm:order-1">
           <img
             className="w-20 h-24 sm:w-24 sm:h-28 cursor-pointer rounded-md border border-slate-100"
@@ -36,7 +36,6 @@ const ProductDisplay = (props) => {
           />
         </div>
 
-        {/* Main Image */}
         <div className="flex-1 flex justify-center items-center order-1 sm:order-2">
           <img
             src={product.image}
@@ -46,13 +45,13 @@ const ProductDisplay = (props) => {
         </div>
       </div>
 
-      {/* RIGHT SIDE - Product Details */}
+      
       <div className="w-full lg:w-1/2 flex flex-col gap-4 lg:gap-5">
         <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold">
           {product.name}
         </h1>
 
-        {/* Stars */}
+      
         <div className="flex items-center gap-1 text-yellow-500">
           <i className="fa-solid fa-star"></i>
           <i className="fa-solid fa-star"></i>
@@ -61,7 +60,7 @@ const ProductDisplay = (props) => {
           <i className="fa-regular fa-star"></i>
         </div>
 
-        {/* Price */}
+        
         <div className="flex items-center gap-4">
           <span className="text-gray-400 line-through text-base sm:text-lg">
             ${product.old_price}
@@ -72,7 +71,7 @@ const ProductDisplay = (props) => {
           </span>
         </div>
 
-        {/* Description */}
+       
         <p className="text-gray-600 text-sm sm:text-base leading-6 sm:leading-7 max-w-xl">
           Designed for comfort and everyday style, this versatile piece features
           quality fabric, a modern fit, and a timeless design. Perfect for
@@ -80,7 +79,7 @@ const ProductDisplay = (props) => {
           essentials.
         </p>
 
-        {/* Size */}
+     
         <div>
           <h3 className="font-semibold mb-3">Select Size</h3>
 
@@ -103,7 +102,7 @@ const ProductDisplay = (props) => {
           </div>
         </div>
 
-        {/* Add To Cart */}
+      
         <button
           onClick={() => addToCart(product.id)}
           className="w-fit rounded-lg bg-black px-8 py-3 text-white transition hover:scale-[1.02] hover:bg-gray-800"

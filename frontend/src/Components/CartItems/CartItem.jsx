@@ -21,9 +21,7 @@ const CartItem = () => {
 
   return (
     <div className="w-full px-4 sm:px-6 md:px-10 lg:px-16 py-8">
-      {/* ================= CART PRODUCTS ================= */}
       <div className="w-full overflow-x-auto">
-        {/* Table Header */}
         <div className="min-w-[850px] grid grid-cols-[100px_2fr_1fr_1fr_1fr_80px] items-center gap-5 border-b border-gray-300 pb-4 text-gray-700 font-semibold">
           <p>Products</p>
           <p>Title</p>
@@ -33,7 +31,6 @@ const CartItem = () => {
           <p>Remove</p>
         </div>
 
-        {/* Cart Items */}
         {all_product.map((e) => {
           if (cartItems[e.id] > 0) {
             return (
@@ -41,7 +38,6 @@ const CartItem = () => {
                 key={e.id}
                 className="min-w-[850px] grid grid-cols-[100px_2fr_1fr_1fr_1fr_80px] items-center gap-5 border-b border-gray-300 py-5"
               >
-                {/* Product Image */}
                 <div>
                   <img
                     src={e.image}
@@ -50,15 +46,12 @@ const CartItem = () => {
                   />
                 </div>
 
-                {/* Product Name */}
                 <p className="text-gray-700 text-sm md:text-base pr-5">
                   {e.name}
                 </p>
 
-                {/* Price */}
                 <p className="font-medium">${e.new_price}</p>
 
-                {/* Quantity */}
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => removeFromCart(e.id)}
@@ -77,10 +70,8 @@ const CartItem = () => {
                   </button>
                 </div>
 
-                {/* Total */}
                 <p className="font-medium">${e.new_price * cartItems[e.id]}</p>
 
-                {/* Remove */}
                 <button
                   onClick={() => removeFromCart(e.id)}
                   className="text-gray-500 hover:text-red-500 text-xl transition"
@@ -95,34 +86,27 @@ const CartItem = () => {
         })}
       </div>
 
-      {/* ================= BOTTOM SECTION ================= */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mt-20">
-        {/* ================= CART TOTALS ================= */}
         <div className="w-full max-w-2xl">
           <h1 className="text-3xl md:text-4xl font-medium mb-8">Cart Totals</h1>
 
-          {/* Subtotal */}
           <div className="flex justify-between items-center py-4 border-b border-gray-300">
             <p className="text-gray-700">Subtotal</p>
 
             <p className="font-medium">${getTotalCartAmount()}</p>
           </div>
-
-          {/* Shipping */}
           <div className="flex justify-between items-center py-4 border-b border-gray-300">
             <p className="text-gray-700">Shipping Fee</p>
 
             <p className="font-medium">Free</p>
           </div>
 
-          {/* Total */}
           <div className="flex justify-between items-center py-4">
             <h3 className="text-lg font-semibold">Total</h3>
 
             <h3 className="text-lg font-semibold">${getTotalCartAmount()}</h3>
           </div>
 
-          {/* Checkout Button */}
           <button
             className="mt-8 bg-red-500 hover:bg-red-600 text-white 
                        px-8 py-4 text-sm font-semibold 
@@ -132,7 +116,6 @@ const CartItem = () => {
           </button>
         </div>
 
-        {/* ================= PROMO CODE ================= */}
         <div className="w-full max-w-xl lg:pt-2">
           <p className="text-gray-500 mb-4">
             If you have a promo code, Enter it here
