@@ -46,11 +46,23 @@ const Navbar = () => {
             </Link>
           ))}
 
-          <Link to="/login">
-            <button className="rounded-xl bg-blue-700 px-4 py-2 text-white transition hover:bg-blue-800">
-              Login
+          {localStorage.getItem("auth-token") ? (
+            <button
+              onClick={() => {
+                localStorage.removeItem("auth-token");
+                window.location.replace("/");
+              }}
+              className="rounded-xl bg-blue-700 px-4 py-2 text-white transition hover:bg-blue-800"
+            >
+              Logout
             </button>
-          </Link>
+          ) : (
+            <Link to="/login">
+              <button className="rounded-xl bg-blue-700 px-4 py-2 text-white transition hover:bg-blue-800">
+                Login
+              </button>
+            </Link>
+          )}
 
           <Link to="/cart" className="relative">
             <img className="h-10 w-10 object-contain" src={cart} alt="Cart" />
