@@ -21,6 +21,23 @@ const ShopContextProvider = (props) => {
         setAll_product(data);
       })
       .catch((error) => console.log("API ERROR:", error));
+
+   if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4000/getcart", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "auth-token": localStorage.getItem("auth-token"),
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("CART DATA:", data);
+          setCartItems(data);
+        })
+        .catch((error) => console.log("CART ERROR:", error));
+    }
   }, []);
 
   const addToCart = (itemId) => {

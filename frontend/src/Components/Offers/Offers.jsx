@@ -1,5 +1,5 @@
 import React from 'react'
-import exclusive from "../../assets/women/w11.png"
+import exclusive from "../../assets/for.jpg"
 
 const Offers = () => {
   return (
