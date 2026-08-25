@@ -11,8 +11,8 @@ const cors = require("cors");
 require("dotenv").config();
 
 const Payment = require("./paymentModel");
-const PurchasedItem = require("./purchaseItemmodel");
-const Item = require("./itemmodel");
+const PurchasedItem = require("./purchaseItemModel");
+const Item = require("./itemModel");
 
 const { initializeKhaltiPayment, verifyKhaltiPayment } = require("./khalti");
 
