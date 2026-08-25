@@ -24,8 +24,8 @@ const Navbar = () => {
     <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100 px-4 sm:px-8 lg:px-12">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 py-3">
         <div className="flex items-center justify-center text-xl font-semibold">
-          <img className="h-16 sm:h-20" src={logo} alt="Shooper logo" />
-          <p>Shooper</p>
+          <img className="h-16 sm:h-20" src={logo} alt="Pasa logo" />
+          <p>Pasa</p>
         </div>
 
         <div className="flex flex-wrap items-center justify-end gap-4 sm:gap-6 md:gap-8">

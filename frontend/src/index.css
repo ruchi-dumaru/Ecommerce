@@ -13,3 +13,162 @@ body {
   -ms-overflow-style: none;  
   scrollbar-width: none;    
 }
+
+
+
+/* ================= HERO ANIMATIONS ================= */
+
+.hero-text {
+  animation: heroTextIn 1s ease-out forwards;
+}
+
+@keyframes heroTextIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* Main heading */
+
+.hero-heading {
+  animation: headingReveal 1.2s ease-out forwards;
+}
+
+@keyframes headingReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    letter-spacing: 0.08em;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: -0.02em;
+  }
+}
+
+
+/* Collection sliding text */
+
+.collection-slider {
+  animation: collectionSlide 7s ease-in-out infinite;
+}
+
+@keyframes collectionSlide {
+
+  0%,
+  25% {
+    transform: translateY(0);
+  }
+
+  33%,
+  58% {
+    transform: translateY(-33.33%);
+  }
+
+  66%,
+  91% {
+    transform: translateY(-66.66%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+/* Images entrance */
+
+.hero-images {
+  animation: imageContainerIn 1.2s ease-out forwards;
+}
+
+@keyframes imageContainerIn {
+  from {
+    opacity: 0;
+    transform: translateX(70px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+
+/* Floating images */
+
+.image-one {
+  animation:
+    imageFloatOne 5s ease-in-out infinite,
+    imageAppear 1s ease-out forwards;
+}
+
+.image-two {
+  animation:
+    imageFloatTwo 6s ease-in-out infinite,
+    imageAppear 1.2s ease-out forwards;
+}
+
+.image-three {
+  animation:
+    imageFloatThree 5.5s ease-in-out infinite,
+    imageAppear 1.4s ease-out forwards;
+}
+
+
+@keyframes imageFloatOne {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(1deg);
+  }
+}
+
+
+@keyframes imageFloatTwo {
+  0%,
+  100% {
+    transform: translateY(0) rotate(2deg);
+  }
+
+  50% {
+    transform: translateY(-25px) rotate(-2deg);
+  }
+}
+
+
+@keyframes imageFloatThree {
+  0%,
+  100% {
+    transform: translateY(0) rotate(3deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(-1deg);
+  }
+}
+
+
+@keyframes imageAppear {
+  from {
+    opacity: 0;
+    scale: 0.8;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}

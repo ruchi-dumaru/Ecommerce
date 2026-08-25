@@ -19,6 +19,30 @@ const CartItem = () => {
     );
   }
 
+  const handleCheckout = async (itemId, price) => {
+     console.log("CHECKOUT itemId:", itemId);
+  console.log("CHECKOUT price:", price);
+    try {
+      const response = await fetch("http://localhost:4000/initialize-khalti", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          itemId: itemId,
+          totalPrice: price,
+          website_url: "http://localhost:5173",
+        }),
+      });
+
+      const data = await response.json();
+
+      console.log("Khalti response:", data);
+    } catch (error) {
+      console.log("Checkout error:", error);
+    }
+  };
+
   return (
     <div className="w-full px-4 sm:px-6 md:px-10 lg:px-16 py-8">
       <div className="w-full overflow-x-auto">
@@ -108,9 +132,23 @@ const CartItem = () => {
           </div>
 
           <button
+            onClick={() => {
+              const firstItem = all_product.find((e) => cartItems[e.id] > 0);
+
+            if (firstItem) {
+  console.log("FIRST ITEM:", firstItem);
+  console.log("FIRST ITEM _id:", firstItem._id);
+  console.log("FIRST ITEM id:", firstItem.id);
+  console.log("FIRST ITEM PRICE:", firstItem.new_price);
+  console.log("CART ITEMS:", cartItems);
+  console.log("CART TOTAL:", getTotalCartAmount());
+
+  handleCheckout(firstItem._id, firstItem.new_price);
+}
+            }}
             className="mt-8 bg-red-500 hover:bg-red-600 text-white 
-                       px-8 py-4 text-sm font-semibold 
-                       transition duration-300"
+             px-8 py-4 text-sm font-semibold 
+             transition duration-300"
           >
             PROCEED TO CHECKOUT
           </button>
@@ -130,6 +168,7 @@ const CartItem = () => {
             />
 
             <button
+              onClick={handleCheckout}
               className="bg-black text-white px-8 sm:px-12 
                          hover:bg-gray-800 transition"
             >

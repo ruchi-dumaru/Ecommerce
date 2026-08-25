@@ -4,7 +4,7 @@ const Footer = () => {
     <div className="text-xl bg-purple-900 text-white">
       <div className="flex mt-10 mb-8  items-center justify-center text-xl font-normal">
         <img className="h-20 " src={logo} />
-        <p>Shooper</p>
+        <p>Pasa</p>
       </div>
       <div className="flex gap-8 cursor-pointer justify-center items-center">
         <ul>Company</ul>
