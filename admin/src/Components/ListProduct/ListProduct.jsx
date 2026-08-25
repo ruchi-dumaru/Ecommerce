@@ -4,7 +4,7 @@ const ListProduct = () => {
   const [allproducts, setAllProducts] = useState([]);
 
   const fetchInfo = async () => {
-    await fetch("http://localhost:4000/allproducts")
+    await fetch("https://ecommerce-pasa.onrender.com/allproducts")
       .then((res) => res.json())
       .then((data) => {
         setAllProducts(data);
@@ -16,7 +16,7 @@ const ListProduct = () => {
   }, []);
 
   const removeProduct = async (id) => {
-    await fetch("http://localhost:4000/removeproduct", {
+    await fetch("https://ecommerce-pasa.onrender.com/removeproduct", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -24,7 +24,7 @@ const ListProduct = () => {
       },
       body: JSON.stringify({ id: id }),
     });
-   await fetchInfo()
+    await fetchInfo();
   };
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 py-6">
