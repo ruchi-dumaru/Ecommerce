@@ -10,6 +10,12 @@ require("dotenv").config();
 
 const port = 4000;
 
+const Payment = require("./paymentModel");
+const PurchasedItem = require("./purchaseItemmodel");
+const Item = require("./itemmodel");
+
+const { initializeKhaltiPayment, verifyKhaltiPayment } = require("./khalti");
+
 app.use(express.json());
 app.use(cors());
 
@@ -293,6 +299,150 @@ app.post("/getcart", fetchUser, async (req, res) => {
   console.log("Get cart");
   let userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
+});
+
+//payment initialize api
+
+app.post("/initialize-khalti", async (req, res) => {
+  try {
+    const { itemId, totalPrice, website_url } = req.body;
+
+    console.log("REQ BODY:", req.body);
+
+    const itemData = await Item.findOne({
+      _id: itemId,
+      new_price: Number(totalPrice),
+    });
+
+    if (!itemData) {
+      return res.status(400).json({
+        success: false,
+        message: "item not found",
+      });
+    }
+
+    const purchasedItemData = await PurchasedItem.create({
+      item: itemId,
+      paymentMethod: "khalti",
+      totalPrice: Number(totalPrice) * 100,
+    });
+
+    const paymentInitiate = await initializeKhaltiPayment({
+      amount: Number(totalPrice) * 100,
+      purchase_order_id: purchasedItemData._id.toString(),
+      purchase_order_name: itemData.name,
+      return_url: `${process.env.BACKEND_URI}/complete-khalti-payment`,
+      website_url,
+    });
+
+    return res.json({
+      success: true,
+      purchasedItemData,
+      payment: paymentInitiate,
+    });
+
+  } catch (error) {
+  console.log("KHALTI ERROR:", error.response?.data || error);
+  console.log("STATUS:", error.response?.status);
+  console.log("MESSAGE:", error.message);
+
+  return res.status(error.response?.status || 500).json({
+    success: false,
+    error: error.response?.data || error.message || error,
+  });
+}
+});
+
+
+// it is our `return url` where we verify the payment done by user
+app.get("/complete-khalti-payment", async (req, res) => {
+  const {
+    pidx,
+    txnId,
+    amount,
+    mobile,
+    purchase_order_id,
+    purchase_order_name,
+    transaction_id,
+  } = req.query;
+
+  try {
+    const paymentInfo = await verifyKhaltiPayment(pidx);
+
+    // Check if payment is completed and details match
+    if (
+      paymentInfo?.status !== "Completed" ||
+      paymentInfo.transaction_id !== transaction_id ||
+      Number(paymentInfo.total_amount) !== Number(amount)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Incomplete information",
+        paymentInfo,
+      });
+    }
+
+    // Check if payment done in valid item
+    const purchasedItemData = await PurchasedItem.find({
+      _id: purchase_order_id,
+      totalPrice: amount,
+    });
+
+    if (!purchasedItemData) {
+      return res.status(400).send({
+        success: false,
+        message: "Purchased data not found",
+      });
+    }
+    await PurchasedItem.findByIdAndUpdate(
+      purchase_order_id,
+
+      {
+        $set: {
+          status: "completed",
+        },
+      },
+    );
+
+    // Create a new payment record
+    const paymentData = await Payment.create({
+      pidx,
+      transactionId: transaction_id,
+      productId: purchase_order_id,
+      amount,
+      dataFromVerificationReq: paymentInfo,
+      apiQueryFromUser: req.query,
+      paymentGateway: "khalti",
+      status: "success",
+    });
+
+    // Send success response
+    res.json({
+      success: true,
+      message: "Payment Successful",
+      paymentData,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred",
+      error,
+    });
+  }
+});
+
+app.get("/create-item", async (req, res) => {
+  let itemData = await Item.create({
+    name: "Headphone",
+    price: 5,
+    inStock: true,
+    category: "vayo pardaina",
+  });
+  res.json({
+    success: true,
+    item: itemData,
+  });
 });
 
 // Start server
