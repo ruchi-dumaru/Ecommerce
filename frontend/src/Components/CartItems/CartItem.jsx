@@ -20,20 +20,23 @@ const CartItem = () => {
   }
 
   const handleCheckout = async (itemId, price) => {
-     console.log("CHECKOUT itemId:", itemId);
-  console.log("CHECKOUT price:", price);
+    console.log("CHECKOUT itemId:", itemId);
+    console.log("CHECKOUT price:", price);
     try {
-      const response = await fetch("http://localhost:4000/initialize-khalti", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://ecommerce-pasa.onrender.com/initialize-khalti",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            itemId: itemId,
+            totalPrice: price,
+            website_url: "http://localhost:5173",
+          }),
         },
-        body: JSON.stringify({
-          itemId: itemId,
-          totalPrice: price,
-          website_url: "http://localhost:5173",
-        }),
-      });
+      );
 
       const data = await response.json();
 
@@ -135,16 +138,16 @@ const CartItem = () => {
             onClick={() => {
               const firstItem = all_product.find((e) => cartItems[e.id] > 0);
 
-            if (firstItem) {
-  console.log("FIRST ITEM:", firstItem);
-  console.log("FIRST ITEM _id:", firstItem._id);
-  console.log("FIRST ITEM id:", firstItem.id);
-  console.log("FIRST ITEM PRICE:", firstItem.new_price);
-  console.log("CART ITEMS:", cartItems);
-  console.log("CART TOTAL:", getTotalCartAmount());
+              if (firstItem) {
+                console.log("FIRST ITEM:", firstItem);
+                console.log("FIRST ITEM _id:", firstItem._id);
+                console.log("FIRST ITEM id:", firstItem.id);
+                console.log("FIRST ITEM PRICE:", firstItem.new_price);
+                console.log("CART ITEMS:", cartItems);
+                console.log("CART TOTAL:", getTotalCartAmount());
 
-  handleCheckout(firstItem._id, firstItem.new_price);
-}
+                handleCheckout(firstItem._id, firstItem.new_price);
+              }
             }}
             className="mt-8 bg-red-500 hover:bg-red-600 text-white 
              px-8 py-4 text-sm font-semibold 

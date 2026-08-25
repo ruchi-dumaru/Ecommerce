@@ -2,15 +2,13 @@ import { useEffect, useState } from "react";
 import Item from "../Item/Item.jsx";
 
 const Popular = () => {
-  const [popularProducts,setPopularProducts]=useState([]);
+  const [popularProducts, setPopularProducts] = useState([]);
 
-useEffect(()=>{
-  fetch('http://localhost:4000/popularinwomen')
-  .then((response)=>response.json())
-  .then((data)=>setPopularProducts(data));
-},[])
-
-
+  useEffect(() => {
+    fetch("https://ecommerce-pasa.onrender.com/popularinwomen")
+      .then((response) => response.json())
+      .then((data) => setPopularProducts(data));
+  }, []);
 
   return (
     <div className="px-4 py-10 sm:px-8 lg:px-12">

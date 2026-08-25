@@ -12,47 +12,48 @@ const LoginSignup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const login = async () => {
-    console.log("Login funciton executed",formData);
+    console.log("Login funciton executed", formData);
 
     let responseData;
-    await fetch('http://localhost:4000/login',{
-      method:'POST',
-      headers:{
-        Accept:"application/form-data",
-        'Content-Type':'application/json'
+    await fetch("https://ecommerce-pasa.onrender.com/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/form-data",
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify(formData),
-    }).then((response)=>response.json()).then((data)=>responseData=data)
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => (responseData = data));
 
-    if(responseData.success){
-      localStorage.setItem('auth-token',responseData.token)
-      window.location.replace('/')
+    if (responseData.success) {
+      localStorage.setItem("auth-token", responseData.token);
+      window.location.replace("/");
+    } else {
+      alert(responseData.errors);
     }
-    else{
-      alert(responseData.errors)
-    }
-
   };
 
   const signup = async () => {
-    console.log("signup function executed",formData);
+    console.log("signup function executed", formData);
 
     let responseData;
-    await fetch('http://localhost:4000/signup',{
-      method:'POST',
-      headers:{
-        Accept:"application/form-data",
-        'Content-Type':'application/json'
+    await fetch("https://ecommerce-pasa.onrender.com/signup", {
+      method: "POST",
+      headers: {
+        Accept: "application/form-data",
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify(formData),
-    }).then((response)=>response.json()).then((data)=>responseData=data)
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => (responseData = data));
 
-    if(responseData.success){
-      localStorage.setItem('auth-token',responseData.token)
-      window.location.replace('/')
-    }
-    else{
-      alert(responseData.errors)
+    if (responseData.success) {
+      localStorage.setItem("auth-token", responseData.token);
+      window.location.replace("/");
+    } else {
+      alert(responseData.errors);
     }
   };
 
@@ -63,9 +64,9 @@ const LoginSignup = () => {
         <div className="flex flex-col gap-4">
           {state === "SignUp" ? (
             <input
-            name="username"
-            value={formData.username}
-            onChange={changeHandler}
+              name="username"
+              value={formData.username}
+              onChange={changeHandler}
               type="text"
               placeholder="Enter your name"
               className="border-2 focus:outline-none decoration-none   p-4 border-gray-400 rounded-2xl"
@@ -78,7 +79,7 @@ const LoginSignup = () => {
             type="email"
             name="email"
             onChange={changeHandler}
-             value={formData.email}
+            value={formData.email}
             placeholder="Enter your email"
             className="border-2 focus:outline-none p-4 border-gray-400 rounded-2xl"
           />
@@ -87,7 +88,7 @@ const LoginSignup = () => {
             type="password"
             name="password"
             onChange={changeHandler}
-             value={formData.password}
+            value={formData.password}
             placeholder="Enter your password"
             className="border-2 focus:outline-none p-4 border-gray-400 rounded-2xl"
           />
