@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
-const path = require("path");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const { v2: cloudinary } = require("cloudinary");
+
 const cors = require("cors");
 require("dotenv").config();
 
@@ -27,27 +29,42 @@ app.get("/", (req, res) => {
   res.send("Express App is Running");
 });
 
-// Image storage engine
-const storage = multer.diskStorage({
-  destination: "./upload/images",
 
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}${path.extname(file.originalname)}`);
+
+// Cloudinary configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUDNAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Cloudinary storage
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "ecommerce/products",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-// Static images
-app.use("/images", express.static("upload/images"));
-
-// Upload endpoint
+// Upload image to Cloudinary
 app.post("/upload", upload.single("product"), (req, res) => {
-  res.json({
-    success: 1,
-    image_url: `http://localhost:${port}/images/${req.file.filename}`,
-  });
+  try {
+    res.json({
+      success: true,
+      image_url: req.file.path,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Image upload failed",
+    });
+  }
 });
+
+
 
 //schema for creating products
 const Product = mongoose.model("Product", {
