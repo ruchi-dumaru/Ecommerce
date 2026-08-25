@@ -10,8 +10,6 @@ const { v2: cloudinary } = require("cloudinary");
 const cors = require("cors");
 require("dotenv").config();
 
-const port = 4000;
-
 const Payment = require("./paymentModel");
 const PurchasedItem = require("./purchaseItemmodel");
 const Item = require("./itemmodel");
@@ -28,8 +26,6 @@ mongoose.connect(process.env.MONGODB_URL);
 app.get("/", (req, res) => {
   res.send("Express App is Running");
 });
-
-
 
 // Cloudinary configuration
 cloudinary.config({
@@ -63,8 +59,6 @@ app.post("/upload", upload.single("product"), (req, res) => {
     });
   }
 });
-
-
 
 //schema for creating products
 const Product = mongoose.model("Product", {
@@ -357,19 +351,17 @@ app.post("/initialize-khalti", async (req, res) => {
       purchasedItemData,
       payment: paymentInitiate,
     });
-
   } catch (error) {
-  console.log("KHALTI ERROR:", error.response?.data || error);
-  console.log("STATUS:", error.response?.status);
-  console.log("MESSAGE:", error.message);
+    console.log("KHALTI ERROR:", error.response?.data || error);
+    console.log("STATUS:", error.response?.status);
+    console.log("MESSAGE:", error.message);
 
-  return res.status(error.response?.status || 500).json({
-    success: false,
-    error: error.response?.data || error.message || error,
-  });
-}
+    return res.status(error.response?.status || 500).json({
+      success: false,
+      error: error.response?.data || error.message || error,
+    });
+  }
 });
-
 
 // it is our `return url` where we verify the payment done by user
 app.get("/complete-khalti-payment", async (req, res) => {
@@ -463,6 +455,8 @@ app.get("/create-item", async (req, res) => {
 });
 
 // Start server
+const port = process.env.PORT || 4000;
+
 app.listen(port, (error) => {
   if (!error) {
     console.log("Server running on port " + port);
